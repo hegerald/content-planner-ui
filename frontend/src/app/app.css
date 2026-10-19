@@ -1,0 +1,146 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.logo {
+  color: var(--accent);
+  font-size: 1.3rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.layout.with-panel {
+  grid-template-columns: minmax(0, 1fr) 380px;
+}
+
+@media (max-width: 860px) {
+  .layout.with-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .panel {
+    order: -1;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.chip {
+  border-radius: 999px;
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--chip);
+}
+
+.badge.status[data-status='DRAFT'] {
+  background: var(--draft-bg);
+  color: var(--draft-fg);
+}
+
+.badge.status[data-status='SCHEDULED'] {
+  background: var(--scheduled-bg);
+  color: var(--scheduled-fg);
+}
+
+.badge.status[data-status='PUBLISHED'] {
+  background: var(--published-bg);
+  color: var(--published-fg);
+}
+
+.date {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+h3 {
+  margin: 0.6rem 0 0.3rem;
+  font-size: 1rem;
+}
+
+.text {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--text-soft);
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem;
+  align-self: start;
+  position: sticky;
+  top: 5rem;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem 0;
+}

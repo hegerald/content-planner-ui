@@ -1,0 +1,63 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  font-weight: 400;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.hint {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.counter {
+  margin: -0.3rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.counter.over {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.field-error {
+  margin: -0.3rem 0 0;
+  font-size: 0.8rem;
+  color: var(--danger);
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}

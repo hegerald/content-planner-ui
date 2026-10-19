@@ -1,0 +1,55 @@
+<form class="post-form" (submit)="submit($event)" novalidate>
+  <h2>{{ post() ? 'Post bearbeiten' : 'Neuer Post' }}</h2>
+
+  <label>
+    Titel
+    <input type="text" [formField]="postForm.title" placeholder="z. B. Herbst-Kampagne Teaser" />
+  </label>
+  @if (postForm.title().touched() && postForm.title().invalid()) {
+    @for (err of postForm.title().errors(); track err) {
+      <p class="field-error">{{ err.message }}</p>
+    }
+  }
+
+  <label>
+    Kanal
+    <select [formField]="postForm.channel">
+      <option value="">– bitte wählen –</option>
+      @for (c of channels(); track c.channel) {
+        <option [value]="c.channel">{{ c.displayName }}</option>
+      }
+    </select>
+  </label>
+  @if (postForm.channel().touched() && postForm.channel().invalid()) {
+    @for (err of postForm.channel().errors(); track err) {
+      <p class="field-error">{{ err.message }}</p>
+    }
+  }
+
+  <label>
+    Text
+    <textarea rows="6" [formField]="postForm.text" placeholder="Was soll gepostet werden?"></textarea>
+  </label>
+  <p class="counter" [class.over]="tooLong()">{{ counterText() }}</p>
+  @if (postForm.text().touched() && postForm.text().invalid()) {
+    @for (err of postForm.text().errors(); track err) {
+      <p class="field-error">{{ err.message }}</p>
+    }
+  }
+
+  <label>
+    Geplant für <span class="hint">(optional für Entwürfe)</span>
+    <input type="datetime-local" [formField]="postForm.scheduledAt" />
+  </label>
+
+  @if (error()) {
+    <p class="banner-error" role="alert">{{ error() }}</p>
+  }
+
+  <div class="buttons">
+    <button type="submit" class="primary" [disabled]="saving() || postForm().invalid()">
+      {{ saving() ? 'Speichert …' : 'Speichern' }}
+    </button>
+    <button type="button" (click)="cancelled.emit()">Abbrechen</button>
+  </div>
+</form>

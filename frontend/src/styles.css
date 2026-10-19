@@ -1,0 +1,108 @@
+/* Globale Design-Tokens – hell und dunkel */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --border: #dfe2e7;
+  --text: #1c2230;
+  --text-soft: #3d4555;
+  --muted: #6b7385;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --danger: #c62828;
+  --chip: #eef0f4;
+  --draft-bg: #eef0f4;
+  --draft-fg: #3d4555;
+  --scheduled-bg: #e0e7ff;
+  --scheduled-fg: #3730a3;
+  --published-bg: #dcfce7;
+  --published-fg: #166534;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151c;
+    --surface: #1b1f29;
+    --border: #2c3240;
+    --text: #e8eaf0;
+    --text-soft: #c3c8d4;
+    --muted: #8a92a6;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --danger: #f87171;
+    --chip: #262b37;
+    --draft-bg: #262b37;
+    --draft-fg: #c3c8d4;
+    --scheduled-bg: #2e2f6b;
+    --scheduled-fg: #c7d2fe;
+    --published-bg: #14432a;
+    --published-fg: #bbf7d0;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+button {
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+button.link {
+  border: none;
+  background: none;
+  padding: 0.2rem 0.3rem;
+  color: var(--accent);
+}
+
+button.link.danger {
+  color: var(--danger);
+}
+
+.banner-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 8%, transparent);
+}

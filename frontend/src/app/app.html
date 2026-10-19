@@ -1,0 +1,75 @@
+<header class="topbar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">▦</span>
+    <span>Content Planner</span>
+  </div>
+  <button type="button" class="primary" (click)="editing.set('new')">+ Neuer Post</button>
+</header>
+
+<main class="layout" [class.with-panel]="editing() !== null">
+  <section class="list">
+    <nav class="filters" aria-label="Status-Filter">
+      @for (f of filters; track f.value) {
+        <button type="button" class="chip" [class.active]="statusFilter() === f.value" (click)="setFilter(f.value)">
+          {{ f.label }}
+        </button>
+      }
+    </nav>
+
+    @if (error()) {
+      <p class="banner-error" role="alert">
+        {{ error() }}
+        <button type="button" class="link" (click)="error.set(null)">Schließen</button>
+      </p>
+    }
+
+    @if (loading() && posts().length === 0) {
+      <p class="empty">Lädt …</p>
+    } @else {
+      @for (post of posts(); track post.id) {
+        <article class="card">
+          <div class="card-head">
+            <span class="badge channel">{{ post.channelName }}</span>
+            <span class="badge status" [attr.data-status]="post.status">{{ post.statusLabel }}</span>
+            <span class="date">
+              @if (post.publishedAt) {
+                veröffentlicht {{ post.publishedAt | date: 'd. MMM y, HH:mm' }}
+              } @else if (post.scheduledAt) {
+                geplant {{ post.scheduledAt | date: 'd. MMM y, HH:mm' }}
+              } @else {
+                kein Termin
+              }
+            </span>
+          </div>
+          <h3>{{ post.title }}</h3>
+          <p class="text">{{ post.text }}</p>
+          <div class="card-actions">
+            @for (action of post.actions; track action.targetStatus) {
+              <button type="button" (click)="changeStatus(post, action.targetStatus)">{{ action.label }}</button>
+            }
+            <span class="spacer"></span>
+            @if (post.editable) {
+              <button type="button" class="link" (click)="editing.set(post)">Bearbeiten</button>
+            }
+            @if (post.deletable) {
+              <button type="button" class="link danger" (click)="delete(post)">Löschen</button>
+            }
+          </div>
+        </article>
+      } @empty {
+        <p class="empty">Keine Posts gefunden.</p>
+      }
+    }
+  </section>
+
+  @if (editing() !== null) {
+    <aside class="panel">
+      <app-post-form
+        [post]="editedPost()"
+        [channels]="channels()"
+        (saved)="onSaved()"
+        (cancelled)="editing.set(null)"
+      />
+    </aside>
+  }
+</main>
