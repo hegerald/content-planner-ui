@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Datenmodelle des Downstream-Services "content-planner-backend".
- * Spiegeln den OpenAPI-Contract unter docs/downstream/ wider.
+ * Spiegeln den OpenAPI-Contract wider (Wissen dazu: docs/downstream/content-planner-backend/).
  * Enum-Werte werden bewusst als String übernommen: Kennt das Backend einen neuen
  * Kanal oder Status, bricht der UI-Service dadurch nicht.
  */

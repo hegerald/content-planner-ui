@@ -40,4 +40,5 @@ cd frontend && npm test     # Vitest
 
 ## Für KI-Agents
 Projektregeln stehen in [AGENTS.md](AGENTS.md), der Contract des Backends in
-[docs/downstream/](docs/downstream/content-planner-backend.md).
+[docs/downstream/](docs/downstream/content-planner-backend/index.md) – als Bundle im
+[Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (Google, v0.2).

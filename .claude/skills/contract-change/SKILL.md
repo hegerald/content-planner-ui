@@ -15,8 +15,10 @@ Reihenfolge einhalten, sonst laufen Contract und Code auseinander.
    - Nur rückwärtskompatibel: neue Felder optional, nichts umbenennen oder entfernen.
    - Neuer Fehlerfall → neuer, stabiler `code` in einer `BusinessRuleException`.
    - `./mvnw package` → `openapi/openapi.yaml` hat sich geändert und wird mit committet.
-2. **Contract-Kurzfassung** `docs/downstream/content-planner-backend.md` anpassen
-   (Endpunkt-Tabelle, Datenmodell, Fehlercodes).
+2. **Wissens-Bundle** `docs/downstream/content-planner-backend/` (Open Knowledge Format) anpassen:
+   betroffene Konzepte in `api/`, `models/`, `rules/`, `errors/` ändern, je neuem Fehlercode eine Datei
+   in `errors/` + Eintrag in `errors/index.md`, Eintrag in `log.md`. Danach
+   `python3 scripts/check-okf.py docs/downstream/content-planner-backend`.
 3. **UI-Service**
    - `backend/BackendModels.java` und `backend/BackendClient.java` an den Contract anpassen.
    - `view/ViewModels.java` + `view/PostViewMapper.java`: nur Anzeige (Labels, Buttons).

@@ -18,7 +18,7 @@ Grund: Nutzer können sich eigene Oberflächen bauen – das System muss trotzde
 
 ## Downstream-Service
 - `content-planner-backend` (Repo `hegerald/content-planner-backend`), lokal http://localhost:8081
-- Contract: `docs/downstream/content-planner-backend.md`; maßgeblich ist `openapi/openapi.yaml` im Backend-Repo
+- Wissen über das Backend: OKF-Bundle `docs/downstream/content-planner-backend/` (Einstieg `index.md`; Regeln, Fehlercodes, Modelle als einzelne Konzepte). Maßgeblich ist `openapi/openapi.yaml` im Backend-Repo. Prüfen: `python3 scripts/check-okf.py docs/downstream/content-planner-backend`
 - Client: `ui-service/src/main/java/at/contentplanner/ui/backend/BackendClient.java`
 - Braucht ein Feature neue Daten oder Regeln, zuerst das Backend erweitern, dann hier anbinden.
 
