@@ -31,6 +31,12 @@ Grund: Nutzer können sich eigene Oberflächen bauen – das System muss trotzde
 ## Entwicklungsablauf
 Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan, Tests, Umsetzung)
 → Subagent `reviewer` (unabhängige Prüfung) → Commit + Pull Request.
+- Issues und PRs: Repo `hegerald/content-planner-ui`, Label `refined` für verfeinerte Issues.
+  Backend-PRs verlinken das Issue.
+- Komponenten-Reihenfolge bei Features: Backend → UI-Service → Frontend.
+- API-Änderungen: Skill `contract-change` befolgen.
+- Die SDLC-Skills und der Reviewer sind projektunabhängig (`metadata.scope: global`) und liegen
+  hier nur zum Zeigen; projektspezifisch ist nur `contract-change`.
 
 ## Befehle
 - UI-Service: `cd ui-service && ./mvnw quarkus:dev` · Tests: `./mvnw test` (Backend wird gemockt)

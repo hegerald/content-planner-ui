@@ -1,44 +1,49 @@
 ---
 name: implement-issue
-description: Setzt ein verfeinertes GitHub-Issue über Backend, UI-Service und Frontend um – Plan, Tests zuerst, Umsetzung, Review durch den reviewer-Subagent, Commit und Pull Request. Nur manuell aufrufen.
+description: Setzt ein verfeinertes Issue mit Akzeptanzkriterien um – Branch, Plan mit Freigabe, Tests zuerst, Umsetzung über alle betroffenen Komponenten, unabhängiges Review durch den reviewer-Subagent, Commit und Pull Request. Verwenden, wenn ein Issue implementiert werden soll. Nur manuell aufrufen.
 argument-hint: "[Issue-Nummer]"
 disable-model-invocation: true
+license: MIT
+metadata:
+  scope: global
+  sdlc-phase: implementation
+  version: "1.0"
 ---
 
 # Issue umsetzen
 
-Issue: #$ARGUMENTS im Repo `hegerald/content-planner-ui`
+Issue: #$ARGUMENTS
+
+Dieser Skill ist projektunabhängig. Repos, Komponenten, Reihenfolge der Schichten, Befehle
+und Konventionen stehen in der `AGENTS.md` des Projekts (und ggf. der verbundenen Repos).
 
 ## 1. Vorbereiten
-- Issue über den GitHub-MCP lesen. Fehlen Akzeptanzkriterien, abbrechen und auf
+- Issue über das Issue-System lesen. Fehlen testbare Akzeptanzkriterien: abbrechen und auf
   `/refine-requirement` verweisen.
-- In jedem betroffenen Repo einen Branch anlegen: `feature/<nr>-<kurzer-slug>`
-  (Backend liegt unter `../content-planner-backend`).
-- Bei Backend-Änderungen zuerst `../content-planner-backend/AGENTS.md` lesen.
+- `AGENTS.md` aller betroffenen Repos lesen.
+- In jedem betroffenen Repo einen Branch `feature/<nr>-<kurzer-slug>` anlegen.
 
-## 2. Plan
-Zeige einen kurzen Plan und warte auf Freigabe:
-- welche Dateien pro Service geändert werden,
-- welche Tests neu dazukommen (je Akzeptanzkriterium mindestens einer),
-- ob sich der API-Contract ändert (dann Skill `contract-change` befolgen).
+## 2. Plan – mit Freigabe
+Kurz zeigen und auf Freigabe warten:
+- geänderte Dateien je Komponente,
+- neue Tests (je Akzeptanzkriterium mindestens einer),
+- Änderungen an Schnittstellen/Contracts und ob sie rückwärtskompatibel sind.
 
-## 3. Umsetzen – immer in dieser Reihenfolge
-1. **Backend:** Test für die neue Regel schreiben (rot), Regel in `PostRules` umsetzen (grün),
-   dann Service/Resource. `./mvnw package` im Backend → aktualisiert `openapi/openapi.yaml`.
-2. **UI-Service:** Client-Modelle und Mapping erweitern, nur Darstellung. `./mvnw test`.
-3. **Frontend:** Typen, Service, Komponenten. `npm test` und `npm run build`.
+## 3. Umsetzen
+- Reihenfolge: von der Komponente mit der Business-Logik nach außen zur Oberfläche.
+- Je Akzeptanzkriterium: Test schreiben (rot) → Code (grün) → aufräumen.
+- Nach jeder Komponente deren Tests und Build laufen lassen (Befehle laut `AGENTS.md`).
+- Schlägt ein Test fehl, den **Code** korrigieren. Tests nur ändern, wenn sich die
+  Anforderung geändert hat – und das ausdrücklich begründen.
+- Schnittstellen-Änderungen: Contract-Dateien mitziehen (siehe projektspezifische Skills).
 
-Nach jedem Schritt die Tests des jeweiligen Teils laufen lassen. Schlägt ein Test fehl, den
-**Code** korrigieren – Tests nur ändern, wenn sich die Anforderung geändert hat, und das
-dann ausdrücklich begründen.
-
-## 4. Review
-Starte den Subagent `reviewer` mit Issue-Nummer und den betroffenen Repos.
-Behebe alle Befunde mit Schweregrad „hoch" und „mittel", danach erneut prüfen lassen
-(höchstens 2 Runden; danach offene Punkte im PR auflisten).
+## 4. Review – unabhängig
+Subagent `reviewer` mit Issue-Nummer und betroffenen Repos starten.
+Befunde „hoch" und „mittel" beheben, danach erneut prüfen lassen.
+**Maximal 2 Runden**; danach offene Punkte im Pull Request auflisten statt weiterzuschleifen.
 
 ## 5. Abschließen
-- Commits pro Repo im Format `feat(#<nr>): <was>` (bzw. `fix`, `test`, `docs`), Text Deutsch.
-- Push und Pull Request je Repo über den GitHub-MCP. PR-Beschreibung: `Closes #<nr>` (im UI-Repo),
-  Zusammenfassung, Testnachweis, Review-Ergebnis. Backend-PR verweist auf das Issue per Link.
-- Am Ende: Links zu den PRs und eine Zeile pro Akzeptanzkriterium, wodurch es abgedeckt ist.
+- Commits: `feat(#<nr>): <was>` (bzw. `fix`, `test`, `docs`, `refactor`).
+- Push und je Repo ein Pull Request nach Vorlage `.github/pull_request_template.md`;
+  im Haupt-Repo `Closes #<nr>`.
+- Zum Schluss: PR-Links und je Akzeptanzkriterium, wodurch es abgedeckt ist.
