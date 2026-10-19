@@ -13,18 +13,18 @@ Anzeige auf (Labels, erlaubte Aktionen als Buttons) und reicht Fehler unverände
 Eine selbst gebaute Oberfläche kann `/ui-api` genauso nutzen wie die Angular-App.
 
 ## Voraussetzungen
-- JDK 25 oder neuer, Maven 3.9+
+- JDK 25 oder neuer (Maven lädt `./mvnw` selbst; Windows: `.\mvnw`)
 - Node.js 24.15+ LTS (oder 22.22.3+ / 26) mit npm 11 – ältere npm-10-Versionen brechen bei `npm install` ab
 - Laufendes Backend (siehe Backend-Repo)
 
 ## Starten
 ```bash
 # 1. Backend (im Backend-Repo)
-mvn quarkus:dev
+./mvnw quarkus:dev
 
 # 2. UI-Service
 cd ui-service
-mvn quarkus:dev            # http://localhost:8080/q/swagger-ui
+./mvnw quarkus:dev            # http://localhost:8080/q/swagger-ui
 
 # 3. Frontend
 cd frontend
@@ -34,7 +34,7 @@ npm start                  # http://localhost:4200
 
 ## Testen
 ```bash
-cd ui-service && mvn test   # Backend wird gemockt
+cd ui-service && ./mvnw test   # Backend wird gemockt
 cd frontend && npm test     # Vitest
 ```
 

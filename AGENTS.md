@@ -23,9 +23,9 @@ Grund: Nutzer können sich eigene Oberflächen bauen – das System muss trotzde
 - Braucht ein Feature neue Daten oder Regeln, zuerst das Backend erweitern, dann hier anbinden.
 
 ## Befehle
-- UI-Service: `cd ui-service && mvn quarkus:dev` · Tests: `mvn test` (Backend wird gemockt)
+- UI-Service: `cd ui-service && ./mvnw quarkus:dev` · Tests: `./mvnw test` (Backend wird gemockt)
 - Frontend: `cd frontend && npm install && npm start` · Tests: `npm test` · Build: `npm run build`
-- Für die ganze Kette zuerst das Backend starten (`mvn quarkus:dev` im Backend-Repo).
+- Für die ganze Kette zuerst das Backend starten (`./mvnw quarkus:dev` im Backend-Repo).
 
 ## Konventionen
 - Java: Quarkus 3.40, Records für DTOs, `@ClientExceptionMapper` für Downstream-Fehler.
