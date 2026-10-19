@@ -22,6 +22,16 @@ Grund: Nutzer können sich eigene Oberflächen bauen – das System muss trotzde
 - Client: `ui-service/src/main/java/at/contentplanner/ui/backend/BackendClient.java`
 - Braucht ein Feature neue Daten oder Regeln, zuerst das Backend erweitern, dann hier anbinden.
 
+## Arbeiten über beide Repos
+- Claude Code wird in diesem Repo gestartet; das Backend liegt daneben unter `../content-planner-backend`
+  (in `.claude/settings.json` als zusätzliches Verzeichnis freigegeben).
+- Dessen Regeln werden nicht automatisch geladen: **vor Änderungen im Backend
+  `../content-planner-backend/AGENTS.md` lesen.**
+
+## Entwicklungsablauf
+Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan, Tests, Umsetzung)
+→ Subagent `reviewer` (unabhängige Prüfung) → Commit + Pull Request.
+
 ## Befehle
 - UI-Service: `cd ui-service && ./mvnw quarkus:dev` · Tests: `./mvnw test` (Backend wird gemockt)
 - Frontend: `cd frontend && npm install && npm start` · Tests: `npm test` · Build: `npm run build`
