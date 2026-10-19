@@ -14,7 +14,7 @@ Eine selbst gebaute Oberfläche kann `/ui-api` genauso nutzen wie die Angular-Ap
 
 ## Voraussetzungen
 - JDK 25 oder neuer, Maven 3.9+
-- Node.js 24 LTS (oder 22.22+ / 26), npm
+- Node.js 24.15+ LTS (oder 22.22.3+ / 26) mit npm 11 – ältere npm-10-Versionen brechen bei `npm install` ab
 - Laufendes Backend (siehe Backend-Repo)
 
 ## Starten

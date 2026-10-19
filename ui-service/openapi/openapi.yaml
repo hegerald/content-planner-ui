@@ -1,0 +1,284 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    ActionView:
+      description: Eine vom Backend erlaubte Statusänderung als Button
+      type: object
+      properties:
+        targetStatus:
+          type: string
+          examples:
+          - SCHEDULED
+        label:
+          type: string
+          examples:
+          - Einplanen
+    ChannelView:
+      description: Kanal für Auswahllisten
+      type: object
+      properties:
+        channel:
+          type: string
+        displayName:
+          type: string
+        maxLength:
+          type: integer
+          format: int32
+    ErrorView:
+      description: Fehlerformat für das Frontend
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: HTTP-Statuscode
+          examples:
+          - 422
+        code:
+          type: string
+          description: Stabiler Fehlercode (vom Backend übernommen)
+          examples:
+          - TEXT_TOO_LONG
+        message:
+          type: string
+          description: Anzeigbare Meldung
+    Instant:
+      type: string
+      format: date-time
+      examples:
+      - 2022-03-10T16:15:50Z
+    PostInput:
+      description: Formulardaten zum Anlegen oder Ändern eines Posts
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        channel:
+          type: string
+          examples:
+          - LINKEDIN
+        scheduledAt:
+          description: "ISO-8601, UTC; optional"
+          type: string
+          examples:
+          - 2026-11-01T09:00:00Z
+          $ref: "#/components/schemas/Instant"
+    PostView:
+      description: "Ein Post, aufbereitet für die Anzeige"
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        text:
+          type: string
+        channel:
+          type: string
+          description: Kanal-Schlüssel
+          examples:
+          - LINKEDIN
+        channelName:
+          type: string
+          description: Kanal-Anzeigename
+          examples:
+          - LinkedIn
+        status:
+          type: string
+          description: Status-Schlüssel
+          examples:
+          - DRAFT
+        statusLabel:
+          type: string
+          description: Status-Anzeigename
+          examples:
+          - Entwurf
+        scheduledAt:
+          $ref: "#/components/schemas/Instant"
+        publishedAt:
+          $ref: "#/components/schemas/Instant"
+        updatedAt:
+          $ref: "#/components/schemas/Instant"
+        editable:
+          type: boolean
+        deletable:
+          type: boolean
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActionView"
+          description: "Buttons, die für diesen Post angezeigt werden sollen"
+    StatusInput:
+      description: Gewünschter Zielstatus
+      type: object
+      properties:
+        targetStatus:
+          type: string
+          examples:
+          - SCHEDULED
+tags:
+- name: UI
+  description: Anzeige-optimierte Endpunkte für Oberflächen
+paths:
+  /ui-api/channels:
+    get:
+      summary: Kanäle für Auswahllisten
+      operationId: listChannelViews
+      tags:
+      - UI
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChannelView"
+  /ui-api/posts:
+    get:
+      summary: Posts für die Übersicht
+      operationId: listPostViews
+      tags:
+      - UI
+      parameters:
+      - name: channel
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PostView"
+    post:
+      summary: Post anlegen
+      operationId: createPostView
+      tags:
+      - UI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: {}
+        "400":
+          description: Bad Request
+  /ui-api/posts/{id}:
+    put:
+      summary: Post ändern
+      operationId: updatePostView
+      tags:
+      - UI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostView"
+        "400":
+          description: Bad Request
+    get:
+      summary: Einzelnen Post für die Detailansicht
+      operationId: getPostView
+      tags:
+      - UI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostView"
+    delete:
+      summary: Post löschen
+      operationId: deletePostView
+      tags:
+      - UI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "204":
+          description: No Content
+  /ui-api/posts/{id}/status:
+    post:
+      summary: Status wechseln
+      operationId: changePostViewStatus
+      tags:
+      - UI
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StatusInput"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostView"
+        "400":
+          description: Bad Request
+info:
+  title: Content Planner UI API
+  version: 1.0.0
+  description: Anzeige-optimierte Schnittstelle für Oberflächen. Enthält keine Business-Logik;
+    alle Regeln prüft das Backend.
+servers:
+- url: http://localhost:8080
+  description: Auto generated value
+- url: http://0.0.0.0:8080
+  description: Auto generated value
