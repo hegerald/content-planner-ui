@@ -8,21 +8,22 @@ on:
 permissions:
   contents: read
 
+# Jeder Job ruft dasselbe Skript wie lokal (Skill verify-all) für seinen Teil auf.
 jobs:
   knowledge:
     name: Wissens-Bundle (Open Knowledge Format)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
       - name: OKF-Bundle prüfen
-        run: python3 scripts/check-okf.py docs/downstream/content-planner-backend
+        run: node scripts/verify.mjs okf
 
   ui-service:
     name: UI-Service (Quarkus)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ui-service
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -30,17 +31,15 @@ jobs:
           distribution: temurin
           java-version: "25"
           cache: maven
-      - name: Build und Tests
-        run: mvn -B verify
-      - name: OpenAPI-Contract aktuell?
-        run: git diff --exit-code -- openapi/ || (echo "::error::openapi/ ist veraltet – mvn package ausführen und committen" && exit 1)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Build, Tests und Contract
+        run: node scripts/verify.mjs ui-service
 
   frontend:
     name: Frontend (Angular)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,8 +47,5 @@ jobs:
           node-version: "24"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
-      - name: Tests
-        run: npm test -- --watch=false
-      - name: Build
-        run: npm run build
+      - name: Installation, Tests und Build
+        run: node scripts/verify.mjs frontend

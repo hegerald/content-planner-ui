@@ -44,7 +44,9 @@ Fehlt eine Stufe darunter, trotzdem mitstarten (Frontend braucht UI-Service, der
   der Editor/die Shell seit der Installation nicht neu gestartet.
 - Fehlt `frontend/node_modules` oder ist `package-lock.json` neuer: `npm install` in `frontend/`.
 - Start in `frontend/`: `npm start -- --no-open`
-- Bereit bei `Local: http://localhost:4200/`. Kette prüfen:
+- Bereit bei `Local: http://localhost:4200/`. Die Zeile enthält ANSI-Farbcodes zwischen
+  `Local`, `localhost:` und `4200` – nach `Watching for file changes` greppen oder per
+  `curl` auf Port 4200 warten, nicht nach `localhost:4200` im Log suchen. Kette prüfen:
   `curl -s http://localhost:4200/ui-api/posts` (läuft über `proxy.conf.json` zum UI-Service).
 
 ## Abschluss

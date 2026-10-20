@@ -36,14 +36,17 @@ Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan,
 - Komponenten-Reihenfolge bei Features: Backend → UI-Service → Frontend.
 - API-Änderungen: Skill `contract-change` befolgen.
 - Die SDLC-Skills (`refine-requirement`, `implement-issue`) und der Reviewer sind
-  projektunabhängig und liegen hier nur zum Zeigen; projektspezifisch sind `contract-change`
-  und `start-services`.
+  projektunabhängig und liegen hier nur zum Zeigen; projektspezifisch sind `contract-change`,
+  `start-services` und `verify-all`.
 
 ## Befehle
 - UI-Service: `cd ui-service && mvn quarkus:dev` · Tests: `mvn test` (Backend wird gemockt)
 - Frontend: `cd frontend && npm install && npm start` · Tests: `npm test` · Build: `npm run build`
 - Für die ganze Kette zuerst das Backend starten (`mvn quarkus:dev` im Backend-Repo).
   Alles auf einmal: Skill `/start-services` (Backend → UI-Service → Frontend, mit Health-Checks).
+- Alle Builds und Tests wie die CI (beide Repos, inkl. Contract und OKF-Check):
+  `node scripts/verify.mjs [backend|ui-service|frontend|okf]` – dasselbe Skript nutzen CI und
+  Push-Hook; Auswertung per Skill `/verify-all`. Was geprüft wird, nur im Skript ändern.
 
 ## Konventionen
 - Java: Quarkus 3.40, Records für DTOs, `@ClientExceptionMapper` für Downstream-Fehler.
@@ -53,8 +56,9 @@ Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan,
 
 ## Claude-Code-Konfiguration in diesem Repo
 - `CLAUDE.md` (diese Datei) – Projektregeln, in jeder Sitzung geladen
-- `.claude/skills/` – Skills: `refine-requirement`, `implement-issue`, `contract-change`, `start-services`
+- `.claude/skills/` – Skills: `refine-requirement`, `implement-issue`, `contract-change`, `start-services`, `verify-all`
 - `.claude/agents/` – Subagents, z. B. `reviewer`
 - `.claude/settings.json` – Berechtigungen, Backend-Repo als zusätzliches Verzeichnis
+- `.claude/hooks/` – Hook: `scripts/verify.mjs` (UI-Service, Frontend, OKF) muss vor `git push` grün sein
 - `.mcp.json` – GitHub-MCP, Token aus Umgebungsvariable `GITHUB_PAT`
 - Persönliches (nicht eingecheckt): `CLAUDE.local.md`, `.claude/settings.local.json`

@@ -37,6 +37,7 @@ npm start                  # http://localhost:4200
 ```bash
 cd ui-service && mvn test   # Backend wird gemockt
 cd frontend && npm test     # Vitest
+node scripts/verify.mjs     # wie die CI: alle Teile, inkl. Backend-Nachbar-Repo
 ```
 
 ## Für Claude Code
