@@ -1,9 +1,6 @@
 ---
 name: contract-change
 description: Checkliste, wenn sich die REST-API des Content-Planner-Backends ändert (neues Feld, neuer Endpunkt, neuer Fehlercode) und die Änderung bis ins Frontend durchgezogen werden muss. Verwenden, sobald openapi.yaml, BackendModels oder die UI-API angepasst werden.
-metadata:
-  scope: project
-  version: "1.0"
 ---
 
 # API-Änderung durch alle Schichten ziehen

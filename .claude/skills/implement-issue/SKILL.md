@@ -3,11 +3,6 @@ name: implement-issue
 description: Setzt ein verfeinertes Issue mit Akzeptanzkriterien um – Branch, Plan mit Freigabe, Tests zuerst, Umsetzung über alle betroffenen Komponenten, unabhängiges Review durch den reviewer-Subagent, Commit und Pull Request. Verwenden, wenn ein Issue implementiert werden soll. Nur manuell aufrufen.
 argument-hint: "[Issue-Nummer]"
 disable-model-invocation: true
-license: MIT
-metadata:
-  scope: global
-  sdlc-phase: implementation
-  version: "1.0"
 ---
 
 # Issue umsetzen
@@ -15,12 +10,12 @@ metadata:
 Issue: #$ARGUMENTS
 
 Dieser Skill ist projektunabhängig. Repos, Komponenten, Reihenfolge der Schichten, Befehle
-und Konventionen stehen in der `AGENTS.md` des Projekts (und ggf. der verbundenen Repos).
+und Konventionen stehen in der `CLAUDE.md` des Projekts (und ggf. der verbundenen Repos).
 
 ## 1. Vorbereiten
 - Issue über das Issue-System lesen. Fehlen testbare Akzeptanzkriterien: abbrechen und auf
   `/refine-requirement` verweisen.
-- `AGENTS.md` aller betroffenen Repos lesen.
+- `CLAUDE.md` aller betroffenen Repos lesen.
 - In jedem betroffenen Repo einen Branch `feature/<nr>-<kurzer-slug>` anlegen.
 
 ## 2. Plan – mit Freigabe
@@ -32,7 +27,7 @@ Kurz zeigen und auf Freigabe warten:
 ## 3. Umsetzen
 - Reihenfolge: von der Komponente mit der Business-Logik nach außen zur Oberfläche.
 - Je Akzeptanzkriterium: Test schreiben (rot) → Code (grün) → aufräumen.
-- Nach jeder Komponente deren Tests und Build laufen lassen (Befehle laut `AGENTS.md`).
+- Nach jeder Komponente deren Tests und Build laufen lassen (Befehle laut `CLAUDE.md`).
 - Schlägt ein Test fehl, den **Code** korrigieren. Tests nur ändern, wenn sich die
   Anforderung geändert hat – und das ausdrücklich begründen.
 - Schnittstellen-Änderungen: Contract-Dateien mitziehen (siehe projektspezifische Skills).

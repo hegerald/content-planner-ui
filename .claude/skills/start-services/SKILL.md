@@ -2,9 +2,6 @@
 name: start-services
 description: Startet den Content Planner lokal – Backend (8081, Nachbar-Repo), UI-Service (8080) und Angular-Frontend (4200) – in der richtigen Reihenfolge als Hintergrundprozesse und prüft jede Stufe. Verwenden, wenn die App laufen soll, zum Ausprobieren oder um eine Änderung im Browser zu sehen. Optional nur einzelne Teile, z. B. `/start-services frontend`.
 argument-hint: "[all|backend|ui-service|frontend]"
-metadata:
-  scope: project
-  version: "1.0"
 ---
 
 # Content Planner lokal starten
@@ -31,7 +28,7 @@ Fehlt eine Stufe darunter, trotzdem mitstarten (Frontend braucht UI-Service, der
 - Start in `../content-planner-backend`:
   `mvn quarkus:dev -Dquarkus.console.enabled=false`
 - Bereit bei `Listening on: http://localhost:8081`. Details: Skill `start-backend` im Backend-Repo
-  (`../content-planner-backend/.agents/skills/start-backend/SKILL.md`).
+  (`../content-planner-backend/.claude/skills/start-backend/SKILL.md`).
 
 ## 2. UI-Service (Port 8080)
 - Läuft schon? `curl -s http://localhost:8080/q/health/ready` → `"status": "UP"`.

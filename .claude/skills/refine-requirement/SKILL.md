@@ -3,11 +3,6 @@ name: refine-requirement
 description: Macht aus einer formlosen Anforderung (Kunden-E-Mail, Notiz, Gesprächsprotokoll) ein verfeinertes Issue mit Ziel, User Story, testbaren Akzeptanzkriterien und betroffenen Komponenten. Verwenden, wenn eine neue Anforderung ins Backlog soll. Legt ein Issue an, daher nur manuell aufrufen.
 argument-hint: "[Anforderungstext oder Pfad zur Datei]"
 disable-model-invocation: true
-license: MIT
-metadata:
-  scope: global
-  sdlc-phase: requirements
-  version: "1.0"
 ---
 
 # Anforderung verfeinern → Issue
@@ -16,13 +11,13 @@ Eingabe: $ARGUMENTS
 Ist es ein Dateipfad, lies die Datei. Ist es leer, bitte um den Anforderungstext.
 
 Dieser Skill ist projektunabhängig. Alles Projektspezifische (Architektur, Repos,
-Komponenten, Labels) steht in der `AGENTS.md` des Projekts – lies sie zuerst.
+Komponenten, Labels) steht in der `CLAUDE.md` des Projekts – lies sie zuerst.
 
 ## Ablauf
 
 1. **Verstehen.** Fasse in 2–3 Sätzen zusammen, was die Person erreichen will
    (Ziel, nicht Lösung).
-2. **Einordnen.** Bestimme anhand der `AGENTS.md`, welche Komponenten betroffen sind.
+2. **Einordnen.** Bestimme anhand der `CLAUDE.md`, welche Komponenten betroffen sind.
    Faustregel: Neue Regeln und Berechnungen gehören dorthin, wo laut Architektur die
    Business-Logik liegt.
 3. **Lücken klären.** Höchstens 3 gezielte Rückfragen, und nur wenn die Antwort die
@@ -31,7 +26,7 @@ Komponenten, Labels) steht in der `AGENTS.md` des Projekts – lies sie zuerst.
 4. **Entwurf zeigen.** Issue im Format von [references/issue-format.md](references/issue-format.md)
    ausgeben und auf Freigabe warten.
 5. **Anlegen.** Erst nach Freigabe über das angebundene Issue-System (z. B. GitHub-MCP)
-   anlegen. Repo und Labels laut `AGENTS.md`. Nummer und Link ausgeben.
+   anlegen. Repo und Labels laut `CLAUDE.md`. Nummer und Link ausgeben.
 
 ## Regeln
 - Titel kurz und fachlich, ohne Lösungsdetails.
