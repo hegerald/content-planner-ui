@@ -8,7 +8,7 @@ Closes #
 - [ ] … – abgedeckt durch …
 
 ## Tests
-- [ ] UI-Service `./mvnw test` grün
+- [ ] UI-Service `mvn test` grün
 - [ ] Frontend `npm test` und `npm run build` grün
 - [ ] Backend betroffen? Dann dort PR: <!-- Link -->
 

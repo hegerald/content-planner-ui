@@ -39,9 +39,10 @@ Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan,
   hier nur zum Zeigen; projektspezifisch ist nur `contract-change`.
 
 ## Befehle
-- UI-Service: `cd ui-service && ./mvnw quarkus:dev` · Tests: `./mvnw test` (Backend wird gemockt)
+- UI-Service: `cd ui-service && mvn quarkus:dev` · Tests: `mvn test` (Backend wird gemockt)
 - Frontend: `cd frontend && npm install && npm start` · Tests: `npm test` · Build: `npm run build`
-- Für die ganze Kette zuerst das Backend starten (`./mvnw quarkus:dev` im Backend-Repo).
+- Für die ganze Kette zuerst das Backend starten (`mvn quarkus:dev` im Backend-Repo).
+  Alles auf einmal: Skill `/start-services` (Backend → UI-Service → Frontend, mit Health-Checks).
 
 ## Konventionen
 - Java: Quarkus 3.40, Records für DTOs, `@ClientExceptionMapper` für Downstream-Fehler.
