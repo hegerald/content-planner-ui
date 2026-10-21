@@ -3,7 +3,7 @@
     <span class="logo" aria-hidden="true">▦</span>
     <span>Content Planner</span>
   </div>
-  <button type="button" class="primary" (click)="editing.set('new')">+ Neuer Post</button>
+  <button type="button" class="primary" (click)="openNew()">+ Neuer Post</button>
 </header>
 
 <main class="layout" [class.with-panel]="editing() !== null">
@@ -48,8 +48,9 @@
               <button type="button" (click)="changeStatus(post, action.targetStatus)">{{ action.label }}</button>
             }
             <span class="spacer"></span>
+            <button type="button" class="link" (click)="openCopy(post)">Für anderen Kanal übernehmen</button>
             @if (post.editable) {
-              <button type="button" class="link" (click)="editing.set(post)">Bearbeiten</button>
+              <button type="button" class="link" (click)="openEdit(post)">Bearbeiten</button>
             }
             @if (post.deletable) {
               <button type="button" class="link danger" (click)="delete(post)">Löschen</button>
@@ -66,6 +67,7 @@
     <aside class="panel">
       <app-post-form
         [post]="editedPost()"
+        [template]="copySource()"
         [channels]="channels()"
         (saved)="onSaved()"
         (cancelled)="editing.set(null)"
