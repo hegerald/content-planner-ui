@@ -34,6 +34,8 @@ export class App {
 
   /** null = Formular geschlossen, 'new' = neuer Post, sonst der zu bearbeitende Post */
   protected readonly editing = signal<PostView | 'new' | null>(null);
+  /** Vorlage für einen neuen Post („Für anderen Kanal übernehmen“), sonst null */
+  protected readonly copySource = signal<PostView | null>(null);
 
   constructor() {
     this.api.listChannels().subscribe({
@@ -60,6 +62,21 @@ export class App {
         this.loading.set(false);
       },
     });
+  }
+
+  protected openNew(): void {
+    this.copySource.set(null);
+    this.editing.set('new');
+  }
+
+  protected openCopy(post: PostView): void {
+    this.copySource.set(post);
+    this.editing.set('new');
+  }
+
+  protected openEdit(post: PostView): void {
+    this.copySource.set(null);
+    this.editing.set(post);
   }
 
   protected editedPost(): PostView | null {
