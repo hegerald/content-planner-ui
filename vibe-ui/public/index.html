@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Content Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍁</text></svg>">
+</head>
+<body>
+  <div class="leaves" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow">Content Planner</p>
+        <h1>Was erntet ihr diese Saison?</h1>
+        <p class="sub">Posts planen, einplanen, veröffentlichen – für alle Kanäle.</p>
+      </div>
+      <button class="btn btn-primary" id="newBtn">
+        <span aria-hidden="true">＋</span> Neuer Post
+      </button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stats" id="stats"></section>
+
+    <section class="toolbar">
+      <div class="chips" id="channelChips" role="group" aria-label="Kanal filtern"></div>
+      <div class="toolbar-right">
+        <label class="select">
+          <span>Status</span>
+          <select id="statusFilter">
+            <option value="">Alle</option>
+          </select>
+        </label>
+        <label class="search">
+          <span class="sr-only">Suchen</span>
+          <input id="search" type="search" placeholder="Suchen …">
+        </label>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-live="polite"></section>
+    <div class="empty" id="empty" hidden>
+      <div class="empty-leaf">🍂</div>
+      <p>Hier liegt noch kein Laub. Leg den ersten Post an!</p>
+    </div>
+  </main>
+
+  <!-- Formular -->
+  <dialog id="postDialog" class="dialog">
+    <form id="postForm" method="dialog" novalidate>
+      <header class="dialog-head">
+        <h2 id="dialogTitle">Neuer Post</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Schließen">✕</button>
+      </header>
+
+      <div class="dialog-body">
+        <label class="field">
+          <span>Titel</span>
+          <input name="title" required maxlength="200" autocomplete="off">
+        </label>
+
+        <div class="row">
+          <label class="field">
+            <span>Kanal</span>
+            <select name="channel" id="channelSelect" required></select>
+          </label>
+          <label class="field">
+            <span>Veröffentlichen am <em>(optional)</em></span>
+            <input name="scheduledAt" type="datetime-local">
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label-row">Text <span class="counter" id="counter"></span></span>
+          <textarea name="text" rows="7" required></textarea>
+          <div class="meter"><div class="meter-fill" id="meterFill"></div></div>
+        </label>
+
+        <p class="form-error" id="formError" hidden></p>
+      </div>
+
+      <footer class="dialog-foot">
+        <button type="button" class="btn btn-ghost" data-close>Abbrechen</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Speichern</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Detail (nur lesen) -->
+  <dialog id="detailDialog" class="dialog">
+    <div>
+      <header class="dialog-head">
+        <h2 id="detailTitle"></h2>
+        <button type="button" class="icon-btn" data-close aria-label="Schließen">✕</button>
+      </header>
+      <div class="dialog-body" id="detailBody"></div>
+      <footer class="dialog-foot" id="detailFoot"></footer>
+    </div>
+  </dialog>
+
+  <!-- Bestätigung -->
+  <dialog id="confirmDialog" class="dialog dialog-sm">
+    <form method="dialog">
+      <div class="dialog-body">
+        <p class="confirm-text" id="confirmText"></p>
+      </div>
+      <footer class="dialog-foot">
+        <button value="no" class="btn btn-ghost">Abbrechen</button>
+        <button value="yes" class="btn btn-danger">Löschen</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="assertive"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
