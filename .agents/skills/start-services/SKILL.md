@@ -1,7 +1,6 @@
 ---
 name: start-services
-description: Startet den Content Planner lokal – Backend (8081, Nachbar-Repo), UI-Service (8080) und Angular-Frontend (4200) – in der richtigen Reihenfolge als Hintergrundprozesse und prüft jede Stufe. Verwenden, wenn die App laufen soll, zum Ausprobieren oder um eine Änderung im Browser zu sehen. Optional nur einzelne Teile, z. B. `/start-services frontend`.
-argument-hint: "[all|backend|ui-service|frontend]"
+description: Startet den Content Planner lokal – Backend (8081, Nachbar-Repo), UI-Service (8080) und Angular-Frontend (4200) – in der richtigen Reihenfolge als Hintergrundprozesse und prüft jede Stufe. Verwenden, wenn die App laufen soll, zum Ausprobieren oder um eine Änderung im Browser zu sehen. Optional nur einzelne Teile, z. B. nur `frontend`.
 ---
 
 # Content Planner lokal starten
@@ -11,11 +10,11 @@ Frontend (4200) ─► UI-Service (8080, /ui-api) ─► Backend (8081, /api)
 frontend/          ui-service/                   ../content-planner-backend
 ```
 
-Argument: `$ARGUMENTS` – leer oder `all` = alles; sonst nur die genannten Teile.
+Argument aus dem Auftrag: leer oder `all` = alles; sonst nur die genannten Teile.
 Fehlt eine Stufe darunter, trotzdem mitstarten (Frontend braucht UI-Service, der braucht das Backend).
 
 ## Grundregeln
-- Jeden Server als **Hintergrundprozess** starten (`run_in_background`), nie im Vordergrund.
+- Jeden Server als **Hintergrundprozess** starten, nie im Vordergrund.
 - Vor jedem Start prüfen, ob er schon läuft – dann überspringen. Belegten Port ohne gültige
   Antwort nicht einfach freiräumen, sondern den Nutzer fragen.
 - Auf die „Listening“-Zeile im Log warten, statt mit `sleep` zu raten.
@@ -28,7 +27,7 @@ Fehlt eine Stufe darunter, trotzdem mitstarten (Frontend braucht UI-Service, der
 - Start in `../content-planner-backend`:
   `mvn quarkus:dev -Dquarkus.console.enabled=false`
 - Bereit bei `Listening on: http://localhost:8081`. Details: Skill `start-backend` im Backend-Repo
-  (`../content-planner-backend/.claude/skills/start-backend/SKILL.md`).
+  (`../content-planner-backend/.agents/skills/start-backend/SKILL.md`).
 
 ## 2. UI-Service (Port 8080)
 - Läuft schon? `curl -s http://localhost:8080/q/health/ready` → `"status": "UP"`.

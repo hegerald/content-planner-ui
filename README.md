@@ -40,7 +40,16 @@ cd frontend && npm test     # Vitest
 node scripts/verify.mjs     # wie die CI: alle Teile, inkl. Backend-Nachbar-Repo
 ```
 
-## Für Claude Code
-Projektregeln stehen in [CLAUDE.md](CLAUDE.md), der Contract des Backends in
+## Für KI-Agents
+Dieser Branch nutzt bewusst **nur offene, werkzeugunabhängige Standards**. Projektregeln stehen
+in [AGENTS.md](AGENTS.md), Skills im Agent-Skills-Format unter `.agents/skills/`, die Prüfung vor
+dem Push als normaler Git-Hook unter `.githooks/`. Hook einmalig aktivieren:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Den GitHub-MCP-Server trägt jede Person im eigenen Werkzeug ein (siehe `AGENTS.md`).
+Der Contract des Backends liegt in
 [docs/downstream/](docs/downstream/content-planner-backend/index.md) – als Bundle im
 [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (Google, v0.2).
