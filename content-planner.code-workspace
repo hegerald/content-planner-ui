@@ -1,0 +1,6 @@
+{
+  "folders": [
+    { "name": "content-planner-ui", "path": "." },
+    { "name": "content-planner-backend", "path": "../content-planner-backend" }
+  ]
+}

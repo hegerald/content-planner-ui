@@ -23,14 +23,13 @@ Grund: Nutzer können sich eigene Oberflächen bauen – das System muss trotzde
 - Braucht ein Feature neue Daten oder Regeln, zuerst das Backend erweitern, dann hier anbinden.
 
 ## Arbeiten über beide Repos
-- Claude Code wird in diesem Repo gestartet; das Backend liegt daneben unter `../content-planner-backend`
-  (in `.claude/settings.json` als zusätzliches Verzeichnis freigegeben).
-- Dessen Regeln werden nicht automatisch geladen: **vor Änderungen im Backend
-  `../content-planner-backend/CLAUDE.md` lesen.**
+- VS Code mit `content-planner.code-workspace` öffnen: Der Workspace enthält dieses Repo und das
+  Backend daneben unter `../content-planner-backend`.
+- **Vor Änderungen im Backend `../content-planner-backend/.github/copilot-instructions.md` lesen.**
 
 ## Entwicklungsablauf
 Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan, Tests, Umsetzung)
-→ Subagent `reviewer` (unabhängige Prüfung) → Commit + Pull Request.
+→ Custom Agent `reviewer` als Subagent (unabhängige Prüfung) → Commit + Pull Request.
 - Issues und PRs: Repo `hegerald/content-planner-ui`, Label `refined` für verfeinerte Issues.
   Backend-PRs verlinken das Issue.
 - Komponenten-Reihenfolge bei Features: Backend → UI-Service → Frontend.
@@ -43,10 +42,10 @@ Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan,
 - UI-Service: `cd ui-service && mvn quarkus:dev` · Tests: `mvn test` (Backend wird gemockt)
 - Frontend: `cd frontend && npm install && npm start` · Tests: `npm test` · Build: `npm run build`
 - Für die ganze Kette zuerst das Backend starten (`mvn quarkus:dev` im Backend-Repo).
-  Alles auf einmal: Skill `/start-services` (Backend → UI-Service → Frontend, mit Health-Checks).
+  Alles auf einmal: Skill `start-services` (Backend → UI-Service → Frontend, mit Health-Checks).
 - Alle Builds und Tests wie die CI (beide Repos, inkl. Contract und OKF-Check):
   `node scripts/verify.mjs [backend|ui-service|frontend|okf]` – dasselbe Skript nutzen CI und
-  Push-Hook; Auswertung per Skill `/verify-all`. Was geprüft wird, nur im Skript ändern.
+  Push-Hook; Auswertung per Skill `verify-all`. Was geprüft wird, nur im Skript ändern.
 
 ## Konventionen
 - Java: Quarkus 3.40, Records für DTOs, `@ClientExceptionMapper` für Downstream-Fehler.
@@ -54,11 +53,15 @@ Anforderung → `/refine-requirement` (Issue) → `/implement-issue <nr>` (Plan,
   Signal Forms, `inject()` statt Konstruktor-Injection, keine NgModules.
 - Code und Bezeichner Englisch; Texte in der Oberfläche, Kommentare und Doku Deutsch.
 
-## Claude-Code-Konfiguration in diesem Repo
-- `CLAUDE.md` (diese Datei) – Projektregeln, in jeder Sitzung geladen
-- `.claude/skills/` – Skills: `refine-requirement`, `implement-issue`, `contract-change`, `start-services`, `verify-all`
-- `.claude/agents/` – Subagents, z. B. `reviewer`
-- `.claude/settings.json` – Berechtigungen, Backend-Repo als zusätzliches Verzeichnis
-- `.claude/hooks/` – Hook: `scripts/verify.mjs` (UI-Service, Frontend, OKF) muss vor `git push` grün sein
-- `.mcp.json` – GitHub-MCP, Token aus Umgebungsvariable `GITHUB_PAT`
-- Persönliches (nicht eingecheckt): `CLAUDE.local.md`, `.claude/settings.local.json`
+## GitHub-Copilot-Konfiguration in diesem Repo
+- `.github/copilot-instructions.md` (diese Datei) – Projektregeln, in jeder Sitzung geladen
+- `.github/skills/` – Skills: `refine-requirement`, `implement-issue`, `contract-change`, `start-services`, `verify-all`
+- `.github/agents/` – Custom Agents, z. B. `reviewer`
+- `.github/hooks/` – Agent-Hook: `scripts/verify.mjs` (UI-Service, Frontend, OKF) muss vor `git push` grün sein; blockiert Force-Push und `git reset --hard`
+- `.vscode/mcp.json` – GitHub-MCP-Server (Anmeldung per OAuth über das GitHub-Konto in VS Code, kein Token im Repo)
+- `.vscode/settings.json` – Terminal-Befehle, die ohne Rückfrage laufen dürfen (`chat.tools.terminal.autoApprove`)
+- `content-planner.code-workspace` – Multi-Root-Workspace mit dem Backend-Repo
+
+## Regeln für den Agent
+- Vor `git commit` und `git push` immer nachfragen. Kein Force-Push, kein `git reset --hard`.
+- `.env`-Dateien (auch im Backend-Repo) nicht lesen und keine Secrets in Code, Issues oder Pull Requests schreiben.

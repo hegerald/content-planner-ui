@@ -1,6 +1,6 @@
 ---
 name: verify-all
-description: Führt alle Builds und Tests des Content Planners lokal so aus wie die CI – Backend (Nachbar-Repo), UI-Service, Frontend und Wissens-Bundle (OKF), inklusive Contract-Prüfung – über `scripts/verify.mjs` und wertet das Ergebnis pro Teil aus. Verwenden vor Commit, Push oder Pull Request und immer, wenn gefragt wird, ob alles grün ist. Optional nur einzelne Teile, z. B. `/verify-all frontend`.
+description: Führt alle Builds und Tests des Content Planners lokal so aus wie die CI – Backend (Nachbar-Repo), UI-Service, Frontend und Wissens-Bundle (OKF), inklusive Contract-Prüfung – über `scripts/verify.mjs` und wertet das Ergebnis pro Teil aus. Verwenden vor Commit, Push oder Pull Request und immer, wenn gefragt wird, ob alles grün ist. Optional nur einzelne Teile, z. B. `verify-all frontend`.
 argument-hint: "[all|backend|ui-service|frontend|okf]"
 ---
 
@@ -12,7 +12,7 @@ es aus und wertet aus. Starten der App statt Prüfen: Skill `start-services`.
 
 ## Schritte
 
-1. Im Repo-Root: `node scripts/verify.mjs $ARGUMENTS --quiet` (leer = alles).
+1. Im Repo-Root: `node scripts/verify.mjs <Teile> --quiet` (ohne Teile = alles).
    Die Teile laufen parallel, alles zusammen ca. 1,5–2 min. Laufende Dev-Server stören nicht
    (Test-Ports 8090/8091). Das Skript gibt eine Tabelle pro Teil aus, darunter Fehlerauszüge und
    den Ordner mit den Logs.

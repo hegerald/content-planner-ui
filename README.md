@@ -40,7 +40,13 @@ cd frontend && npm test     # Vitest
 node scripts/verify.mjs     # wie die CI: alle Teile, inkl. Backend-Nachbar-Repo
 ```
 
-## Für Claude Code
-Projektregeln stehen in [CLAUDE.md](CLAUDE.md), der Contract des Backends in
+## Für GitHub Copilot
+Dieser Branch ist bewusst **nur für GitHub Copilot** (Agent-Modus in VS Code) konfiguriert.
+Projektregeln stehen in [.github/copilot-instructions.md](.github/copilot-instructions.md),
+Skills in `.github/skills/`, der Reviewer in `.github/agents/`, der Agent-Hook vor `git push` in
+`.github/hooks/`, der GitHub-MCP-Server in `.vscode/mcp.json`. VS Code am besten über
+`content-planner.code-workspace` öffnen (UI- und Backend-Repo zusammen).
+
+Der Contract des Backends liegt in
 [docs/downstream/](docs/downstream/content-planner-backend/index.md) – als Bundle im
 [Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog/tree/main/okf) (Google, v0.2).
