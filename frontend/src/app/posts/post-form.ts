@@ -29,6 +29,8 @@ export class PostForm {
   private readonly api = inject(PostApiService);
 
   readonly post = input<PostView | null>(null);
+  /** Vorlage für einen neuen Post: Titel und Text werden übernommen, Kanal und Termin nicht. */
+  readonly template = input<PostView | null>(null);
   readonly channels = input.required<ChannelView[]>();
 
   readonly saved = output<PostView>();
@@ -61,17 +63,20 @@ export class PostForm {
   constructor() {
     effect(() => {
       const post = this.post();
+      const template = this.template();
       this.error.set(null);
-      this.model.set(
-        post
-          ? {
-              title: post.title,
-              text: post.text,
-              channel: post.channel,
-              scheduledAt: toLocalInput(post.scheduledAt),
-            }
-          : { ...EMPTY },
-      );
+      if (post) {
+        this.model.set({
+          title: post.title,
+          text: post.text,
+          channel: post.channel,
+          scheduledAt: toLocalInput(post.scheduledAt),
+        });
+      } else if (template) {
+        this.model.set({ ...EMPTY, title: template.title, text: template.text });
+      } else {
+        this.model.set({ ...EMPTY });
+      }
     });
   }
 
